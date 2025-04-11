@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Kayten | Cybersecurity Testing für ECU & IoT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        /* Kayten CI Colors */
+        :root {
+            --kayten-orange: #F88D2B;
+            --kayten-dark-gray: #373A36;
+            --kayten-white: #FFFFFF;
+            --kayten-light-gray: #f8f9fa; /* Light background */
+            --kayten-text-gray: #555; /* Lighter text */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif; /* Apply Montserrat font */
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--kayten-light-gray); /* Use light gray background */
+            color: var(--kayten-dark-gray); /* Use dark gray for text */
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto; /* Remove top margin to connect header/nav */
+            padding: 0 20px;
+            background-color: var(--kayten-white); /* White background for content */
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+        header {
+            background-color: var(--kayten-white);
+            color: var(--kayten-dark-gray);
+            padding: 1.5rem 20px; /* Adjust padding */
+            border-bottom: 1px solid #eee;
+            display: flex; /* Align logo and potential tagline */
+            align-items: center;
+            position: relative; /* For language switcher positioning */
+        }
+        /* Placeholder for Logo - Replace with <img> tag */
+        #logo-placeholder {
+             display: inline-block; /* Or block */
+             /* Add styles for your actual logo image here */
+             /* E.g., width: 150px; height: auto; */
+             font-weight: bold;
+             font-size: 1.8em;
+             color: var(--kayten-dark-gray); /* Color for text fallback */
+             /* You'll likely replace this whole div content with an <img> tag */
+        }
+         /* Style for actual logo image if used */
+         #logo-placeholder img {
+             height: 40px; /* Adjust height as needed */
+             width: auto;
+             vertical-align: middle;
+         }
+
+        #language-switcher {
+           position: absolute;
+           top: 10px;
+           right: 20px;
+           background: none;
+           text-align: right;
+        }
+        #language-switcher button {
+            background: none;
+            border: none;
+            color: var(--kayten-text-gray);
+            padding: 5px;
+            margin-left: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-family: 'Montserrat', sans-serif;
+        }
+         #language-switcher button:hover {
+            color: var(--kayten-orange);
+            text-decoration: underline;
+         }
+
+        nav {
+            background-color: var(--kayten-dark-gray); /* Use dark gray for nav */
+            padding: 0.6rem 0;
+            text-align: center;
+        }
+        nav a {
+            color: var(--kayten-white);
+            text-decoration: none;
+            padding: 0.6rem 1.5rem; /* Adjust padding */
+            margin: 0;
+            font-size: 0.95em;
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover */
+        }
+        nav a:hover {
+            background-color: var(--kayten-orange); /* Orange hover background */
+            color: var(--kayten-white); /* Keep text white or change if needed */
+        }
+        main {
+             padding-top: 20px; /* Add padding below nav */
+        }
+        section {
+            padding: 2.5rem 0; /* Increase section padding */
+            border-bottom: 1px solid #eee;
+        }
+        section:last-of-type {
+            border-bottom: none;
+        }
+        h2 {
+            color: var(--kayten-orange); /* Orange for main headings */
+            border-bottom: 3px solid var(--kayten-orange);
+            padding-bottom: 0.6rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700; /* Bolder headings */
+        }
+        h3 {
+            color: var(--kayten-dark-gray); /* Dark gray for subheadings */
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+         h4 {
+             color: var(--kayten-text-gray);
+             margin-top: 1rem;
+             margin-bottom: 0.5rem;
+             font-weight: 700;
+         }
+         /* General link styling */
+         a {
+            color: var(--kayten-orange);
+            text-decoration: none;
+         }
+         a:hover {
+            text-decoration: underline;
+         }
+         /* Override for nav links */
+         nav a {
+             color: var(--kayten-white);
+             text-decoration: none;
+         }
+          nav a:hover {
+             background-color: var(--kayten-orange);
+             color: var(--kayten-white);
+             text-decoration: none; /* No underline on nav hover */
+         }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            color: #aaa; /* Lighter footer text */
+            font-size: 0.9em;
+            background-color: var(--kayten-white); /* Match container background */
+            border-top: 1px solid #eee;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: var(--kayten-orange); /* Orange button */
+            color: var(--kayten-white);
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            margin-top: 1rem;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+        }
+        .cta-button:hover {
+            background-color: #e77e1b; /* Darker orange on hover */
+            text-decoration: none;
+            color: var(--kayten-white);
+        }
+        .placeholder-image {
+            background-color: #e9ecef; /* Lighter placeholder */
+            padding: 20px;
+            text-align: center;
+            margin: 1rem 0;
+            font-style: italic;
+            color: #6c757d; /* Bootstrap secondary color */
+            border: 1px dashed #ced4da; /* Bootstrap border color */
+            min-height: 100px; /* Example minimum height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Basic styling for potential icon sections */
+        .icon-section {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            justify-content: space-around;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .icon-item {
+            flex-basis: 30%; /* Adjust as needed */
+            padding: 10px;
+            min-width: 120px; /* Prevent icons becoming too small */
+        }
+        .icon-item .placeholder-image {
+             width: 60px; /* Fixed size for icon placeholders */
+             height: 60px;
+             min-height: auto;
+             margin: 0 auto 0.5rem auto; /* Center placeholder */
+             border-radius: 50%; /* Make icon placeholders circular */
+        }
+         ul {
+             list-style: disc;
+             padding-left: 25px;
+         }
+         li {
+             margin-bottom: 0.5rem;
+         }
+    </style>
+</head>
+<body>
+
+    <header>
+         <div id="logo-placeholder">
+             <img src="images/kayten-logo.png" alt="Kayten Logo">
+        </div>
+        <div id="language-switcher">
+            <button onclick="changeLanguage('de')">DE</button>
+            <button onclick="changeLanguage('en')">EN</button>
+            <button onclick="changeLanguage('tr')">TR</button>
+        </div>
+    </header>
+
+    <nav>
+        <a href="#home" id="nav-home">Start</a>
+        <a href="#services" id="nav-services">Dienstleistungen</a>
+        <a href="#approach" id="nav-approach">Unser Ansatz</a>
+        <a href="#about" id="nav-about">Über Uns</a>
+        <a href="#contact" id="nav-contact">Kontakt</a>
+    </nav>
+
+    <div class="container">
+        <main>
+            <section id="home">
+                <h2 id="welcome-heading">Willkommen</h2>
+                 <div class="placeholder-image" style="min-height: 250px;">
+                     <img src="images/Hero.png" alt="Hero Image">
+                 </div>
+
+                <h3 id="problem-headline">Das Problem: Wachsende Risiken in vernetzten Systemen</h3>
+                <p id="problem-desc">Die zunehmende Vernetzung von ECUs in Fahrzeugen und Milliarden von IoT-Geräten schafft enorme Angriffsflächen [2]. Sicherheitslücken können zu Datenverlust, finanziellen Schäden, Compliance-Verstößen (z.B. gegen UNECE R155, EU CRA) und sogar physischen Risiken führen [3, 219]. Herkömmliche IT-Sicherheit reicht oft nicht aus, da eingebettete Systeme spezielle Herausforderungen wie begrenzte Ressourcen und lange Lebenszyklen aufweisen [4].</p>
+                 <div class="icon-section">
+                    <div class="icon-item">
+                        <div class="placeholder-image">[Icon: Daten]</div>
+                        <p id="icon-data-loss">Datenverlust</p>
+                    </div>
+                    <div class="icon-item">
+                        <div class="placeholder-image">[Icon: Gefahr]</div>
+                        <p id="icon-physical-risk">Physische Risiken</p>
+                    </div>
+                     <div class="icon-item">
+                        <div class="placeholder-image">[Icon: Gesetz]</div>
+                        <p id="icon-compliance-violation">Compliance-Verstöße</p>
+                    </div>
+                </div>
+                <h3 id="solution-headline">Unsere Lösung: Spezialisierte Tests für Ihre Sicherheit</h3>
+                <p id="solution-desc">Wir bieten spezialisierte Cybersicherheitstest-Dienstleistungen für ECUs und IoT-Geräte an. Unser Ansatz basiert auf etablierten Normen wie ISO/SAE 21434, IEC 62443 und ETSI EN 303 645 und hilft Ihnen, regulatorische Anforderungen wie UNECE R155 und den EU Cyber Resilience Act (CRA) zu erfüllen [11, 147, 162].</p>
+                <div class="icon-section">
+                     <div class="icon-item">
+                        <div class="placeholder-image">[Icon: Schild]</div>
+                        <p id="icon-robustness">Robustheit</p>
+                    </div>
+                    <div class="icon-item">
+                        <div class="placeholder-image">[Icon: Haken]</div>
+                        <p id="icon-compliance">Compliance</p>
+                    </div>
+                     <div class="icon-item">
+                        <div class="placeholder-image">[Icon: Zertifikat]</div>
+                        <p id="icon-market-access">Marktzugang</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="services">
+                <h2 id="services-heading">Unsere Dienstleistungen</h2>
+
+                <article id="service-ecu">
+                    <h3 id="ecu-service-title">ECU Cybersecurity Testing (ISO/SAE 21434 & UNECE R155 Fokus)</h3>
+                    <div class="placeholder-image">
+                        <img src="images/Cockpit.png" alt="Cokpit">
+                    </div>
+                    <p id="ecu-service-desc">Speziell für OEMs und Zulieferer der Automobilindustrie [17]. Wir helfen Ihnen, die komplexen Anforderungen der ISO/SAE 21434 zu meistern und die Typgenehmigung gemäß UNECE R155 zu erlangen [12, 163].</p>
+                    <h4 id="ecu-approach-tests-title">Unser Ansatz & durchgeführte Tests:</h4>
+                    <ul id="ecu-approach-tests-list">
+                        <li>Prozessorientierung gemäß V-Modell & ISO 21434</li>
+                        <li>Bedrohungsanalyse und Risikobewertung (TARA) [13, 78]</li>
+                        <li>Statische Code-Analyse (SAST) inkl. MISRA/AUTOSAR [18, 83]</li>
+                        <li>Dynamische Anwendungs-Sicherheitsprüfung (DAST) [19]</li>
+                        <li>Fuzz-Testing von Schnittstellen [19]</li>
+                        <li>Penetrationstests [19]</li>
+                        <li>Schnittstellen- und Ressourcentests [18]</li>
+                    </ul>
+                    <h4 id="ecu-benefits-title">Ihr Nutzen:</h4>
+                    <p id="ecu-benefits-desc">Nachweis der Sorgfaltspflicht, Erfüllung der R155-Anforderungen für die Typgenehmigung, Reduzierung von Sicherheitsrisiken.</p>
+                    <div class="placeholder-image">[Grafik: V-Modell Diagramm]</div>
+                    <div class="mermaid">
+                        graph LR
+                            subgraph Entwicklungsphasen
+                                A(Anforderung) --> B(Architektur); B --> C(Design); C --> D(Implementierung);
+                            end
+                            subgraph Testphasen
+                                H(Abnahmetest) --> G(Systemtest); G --> F(Integrationstest); F --> E(Modultest);
+                            end
+                            subgraph Sicherheitsaktivitäten
+                               SA(TARA / Risikoanalyse); SB(Security Design Review); SC(SAST / Secure Coding); SD(DAST / Fuzzing); SE(Penetration Test);
+                            end
+                            A -- Validierung --- H; B -- Verifikation --- G; C -- Verifikation --- F; D -- Verifikation --- E;
+                            SA -- Beeinflusst --> A; SA -- Beeinflusst --> B; SB -- Prüft --> B; SB -- Prüft --> C; SC -- Prüft --> D; SD -- Testet --> F; SD -- Testet --> G; SE -- Testet --> G; SE -- Testet --> H;
+                            style SA fill:#f9d,stroke:#333,stroke-width:2px; style SB fill:#f9d,stroke:#333,stroke-width:2px; style SC fill:#f9d,stroke:#333,stroke-width:2px; style SD fill:#f9d,stroke:#333,stroke-width:2px; style SE fill:#f9d,stroke:#333,stroke-width:2px
+                    </div>
+                     <div class="placeholder-image" style="min-height: 60px;">[Logos: ISO/SAE 21434, UNECE R155]</div>
+                </article>
+
+                <article id="service-iot">
+                    <h3 id="iot-service-title">IoT Cybersecurity Testing (ETSI EN 303 645, IEC 62443 & CRA Fokus)</h3>
+                     <div class="placeholder-image">
+                         <img src="images/IOT-Devices.png">
+                     </div>
+                    <p id="iot-service-desc">Ob Consumer IoT oder industrielle Steuerungen (IACS) – wir testen Ihr gesamtes Ökosystem: Gerät (Firmware, Hardware), Kommunikationsprotokolle (BLE, Zigbee, WLAN etc.), Cloud-Backend und mobile Apps [227]. Wir prüfen Konformität mit der ETSI EN 303 645 Baseline [35] und den Anforderungen des EU Cyber Resilience Act (CRA) [149]. Für industrielle Systeme orientieren wir uns an IEC 62443 [21].</p>
+                     <h4 id="iot-approach-tests-title">Unser Ansatz & durchgeführte Tests:</h4>
+                     <ul id="iot-approach-tests-list">
+                        <li>Ökosystem-Tests (Gerät, Kommunikation, Cloud, App) [227]</li>
+                        <li>Firmware-Extraktion und -Analyse (z.B. Binwalk, Ghidra) [229, 244, 231]</li>
+                        <li>Hardware-Schnittstellen-Tests (JTAG, UART) [244, 261]</li>
+                        <li>Kommunikationsprotokoll-Analyse (WLAN, BLE, Zigbee...) [245, 262]</li>
+                        <li>Cloud-Backend & API-Sicherheitstests [245, 263]</li>
+                        <li>Mobile App Security Testing [245, 264]</li>
+                        <li>SAST, DAST, Fuzzing, Penetrationstests (z.B. nach OWASP FSTM) [238, 241, 244, 99, 245]</li>
+                        <li>Prüfung spezifischer Anforderungen (Keine Standardpasswörter, Updates, Datenschutz...) [36, 38, 40, 230, 267-272]</li>
+                     </ul>
+                     <h4 id="iot-benefits-title">Ihr Nutzen:</h4>
+                     <p id="iot-benefits-desc">Erfüllung der CRA-Anforderungen für die CE-Kennzeichnung, Einhaltung von ETSI/IEC-Standards, Schutz vor gängigen IoT-Angriffen, Stärkung des Kundenvertrauens.</p>
+                     <div class="placeholder-image">[Grafik: IoT Ökosystem Diagramm]</div>
+                     <div class="mermaid">
+                         graph TD
+                            subgraph IoT Ökosystem
+                                A[IoT Gerät / Firmware] -- Funkprotokoll <br>(BLE, Zigbee, WLAN) --> B(Gateway / Hub);
+                                A -- Direkt / WLAN --> C(Cloud Backend / APIs); B --> C;
+                                C -- Internet --> D(Mobile App / Web Interface);
+                                A -- Physische Schnittstellen <br> (JTAG, UART) --> E((Angriffspunkt Hardware));
+                                style E fill:#f99,stroke:#333,stroke-width:2px
+                            end
+                            F([Tester prüft...]) --> A; F --> B; F --> C; F --> D; F --> E;
+                     </div>
+                     <div class="placeholder-image" style="min-height: 60px;">[Logos: ETSI EN 303 645, IEC 62443, CRA/EU, CE]</div>
+                </article>
+
+                 <article id="service-consulting">
+                    <h3 id="consulting-service-title">(Optional) Compliance Beratung & Dokumentations-Support</h3>
+                    <p id="consulting-service-desc">Wir unterstützen Sie nicht nur beim Testen, sondern auch beim Verständnis der relevanten Normen und Vorschriften, bei der Durchführung von TARA-Workshops und bei der Erstellung notwendiger Konformitätsdokumente, einschließlich der Software Bill of Materials (SBOM) [114-130, 153].</p>
+                </article>
+            </section>
+
+            <section id="approach">
+                <h2 id="approach-heading">Unser Ansatz / Methodik</h2>
+                <p id="approach-intro">Wir verfolgen einen strukturierten und ganzheitlichen Ansatz für die Cybersicherheit eingebetteter Systeme.</p>
+                <ul id="approach-list">
+                    <li><strong>Lebenszyklus-Integration:</strong> Sicherheit von Anfang an ("Security by Design") [5, 173].</li>
+                    <li><strong>Risikobasierter Ansatz:</strong> Fundierte Bedrohungsanalyse und Risikobewertung (TARA) als Basis [13, 78-81, 174].</li>
+                    <li><strong>Umfassendes Testarsenal:</strong> Kombination verschiedener Techniken (SAST, DAST, Fuzzing, Pen-Testing, etc.) für maximale Abdeckung [75-110].</li>
+                     <li><strong>Ökosystem-Fokus:</strong> Betrachtung des gesamten Systems inkl. Hardware, Firmware, Kommunikation und Backend [227].</li>
+                    <li><strong>Fokus auf Standards & Regularien:</strong> Tiefgehendes Wissen über ISO 21434, IEC 62443, ETSI EN 303 645, R155, CRA, MDR/IVDR [11, 147-169].</li>
+                </ul>
+                 <div class="placeholder-image">[Grafik: Prozess-Diagramm / Roadmap]</div>
+                <div class="mermaid">
+                     graph LR
+                        A[1. Planung & Anforderung] --> B(2. Design Review); B --> C(3. Implementierung & SAST);
+                        C --> D(4. Integration & DAST/Fuzzing); D --> E(5. Validierung & Pen-Testing);
+                        E --> F(6. Reporting & Compliance Check); F --> G(7. Post-Market Support);
+                </div>
+                 <div class="icon-section">
+                     <div class="icon-item">
+                        <div class="placeholder-image">[Icon: SAST]</div>
+                        <p id="icon-sast">Statische Analyse</p>
+                    </div>
+                     <div class="icon-item">
+                        <div class="placeholder-image">[Icon: DAST]</div>
+                        <p id="icon-dast">Dynamische Analyse</p>
+                    </div>
+                     <div class="icon-item">
+                        <div class="placeholder-image">[Icon: Fuzzing]</div>
+                        <p id="icon-fuzzing">Fuzz Testing</p>
+                    </div>
+                     <div class="icon-item">
+                        <div class="placeholder-image">[Icon: Pen-Test]</div>
+                        <p id="icon-pentest">Penetration Testing</p>
+                    </div>
+                 </div>
+            </section>
+
+            <section id="about">
+                <h2 id="about-heading">Über Uns / Expertise</h2>
+                <p id="about-desc1">Wir sind ein Team von erfahrenen Cybersicherheits-Experten mit einer klaren Spezialisierung auf die Herausforderungen von eingebetteten Systemen, ECUs und dem Internet der Dinge.</p>
+                <ul id="about-list">
+                    <li>Tiefgreifende Kenntnisse relevanter Normen und gesetzlicher Vorgaben.</li>
+                    <li>Einsatz modernster Testmethoden und Werkzeuge.</li>
+                    <li>Praxisorientierter Ansatz mit Fokus auf umsetzbare Ergebnisse.</li>
+                    <li>Unterstützung bei der Erreichung von Compliance und sicherem Marktzugang.</li>
+                </ul>
+                 <div class="placeholder-image">[Bild: Teamfoto oder abstraktes Technologie-Bild]</div>
+            </section>
+
+            <section id="contact">
+                <h2 id="contact-heading">Kontakt</h2>
+                <p id="contact-intro">Sind Sie bereit, die Sicherheit Ihrer ECU- oder IoT-Produkte auf das nächste Level zu heben und Compliance-Anforderungen zu erfüllen?</p>
+                <p id="contact-prompt">Kontaktieren Sie uns für ein unverbindliches Gespräch über Ihre spezifischen Anforderungen.</p>
+                <p id="contact-details">
+                    E-Mail: <a href="mailto:info@kayten.de">info@kayten.de</a> <br>
+                    Telefon DE: +49 7031 496 89 89 [28]<br>
+                    Telefon TR: +90 352 224 11 21 [26]<br>
+                    </p>
+                <a href="mailto:info@kayten.de" class="cta-button" id="cta-button">Angebot anfordern</a>
+            </section>
+        </main>
+    </div><footer>
+        <p id="footer-copy">&copy; 2025 Kayten GmbH / Kayten Teknoloji Ltd. Şti. Alle Rechte vorbehalten.</p>
+        </footer>
+
+    <script>
+        const translations = {
+            // English Translations
+            en: {
+                'page-title': 'Kayten | Cybersecurity Testing for ECU & IoT',
+                //'main-headline': 'Cybersecurity Testing for ECU & IoT', // Keep Logo placeholder
+                //'sub-headline': 'Your Partner for Security & Compliance in a Connected World', // Remove tagline or add translation
+                'nav-home': 'Home',
+                'nav-services': 'Services',
+                'nav-approach': 'Approach',
+                'nav-about': 'About Us',
+                'nav-contact': 'Contact',
+                'welcome-heading': 'Welcome',
+                'problem-headline': 'The Problem: Growing Risks in Connected Systems',
+                'problem-desc': 'The increasing connectivity of ECUs in vehicles and billions of IoT devices creates vast attack surfaces [2]. Security vulnerabilities can lead to data loss, financial damage, compliance violations (e.g., against UNECE R155, EU CRA), and even physical risks [3, 219]. Traditional IT security often falls short as embedded systems pose unique challenges like limited resources and long lifecycles [4].',
+                'icon-data-loss': 'Data Loss',
+                'icon-physical-risk': 'Physical Risks',
+                'icon-compliance-violation': 'Compliance Violations',
+                'solution-headline': 'Our Solution: Specialized Tests for Your Security',
+                'solution-desc': 'We offer specialized cybersecurity testing services for ECUs and IoT devices. Our approach is based on established standards like ISO/SAE 21434, IEC 62443, and ETSI EN 303 645, helping you meet regulatory requirements such as UNECE R155 and the EU Cyber Resilience Act (CRA) [11, 147, 162].',
+                'icon-robustness': 'Robustness',
+                'icon-compliance': 'Compliance',
+                'icon-market-access': 'Market Access',
+                'services-heading': 'Our Services',
+                'ecu-service-title': 'ECU Cybersecurity Testing (ISO/SAE 21434 & UNECE R155 Focus)',
+                'ecu-service-desc': 'Specifically for OEMs and suppliers in the automotive industry [17]. We help you master the complex requirements of ISO/SAE 21434 and achieve type approval according to UNECE R155 [12, 163].',
+                'ecu-approach-tests-title': 'Our Approach & Tests Performed:',
+                'ecu-approach-tests-list': `<li>Process orientation according to V-model & ISO 21434</li>
+                    <li>Threat Analysis and Risk Assessment (TARA) [13, 78]</li>
+                    <li>Static Code Analysis (SAST) incl. MISRA/AUTOSAR [18, 83]</li>
+                    <li>Dynamic Application Security Testing (DAST) [19]</li>
+                    <li>Fuzz Testing of interfaces [19]</li>
+                    <li>Penetration Testing [19]</li>
+                    <li>Interface and resource testing [18]</li>`,
+                'ecu-benefits-title': 'Your Benefits:',
+                'ecu-benefits-desc': 'Proof of due diligence, fulfillment of R155 requirements for type approval, reduction of security risks.',
+                'iot-service-title': 'IoT Cybersecurity Testing (ETSI EN 303 645, IEC 62443 & CRA Focus)',
+                'iot-service-desc': 'Whether consumer IoT or industrial control systems (IACS) – we test your entire ecosystem: device (firmware, hardware), communication protocols (BLE, Zigbee, WLAN, etc.), cloud backend, and mobile apps [227]. We check conformity with the ETSI EN 303 645 baseline [35] and the requirements of the EU Cyber Resilience Act (CRA) [149]. For industrial systems, we align with IEC 62443 [21].',
+                'iot-approach-tests-title': 'Our Approach & Tests Performed:',
+                 'iot-approach-tests-list': `<li>Ecosystem testing (device, communication, cloud, app) [227]</li>
+                    <li>Firmware extraction and analysis (e.g., Binwalk, Ghidra) [229, 244, 231]</li>
+                    <li>Hardware interface testing (JTAG, UART) [244, 261]</li>
+                    <li>Communication protocol analysis (WLAN, BLE, Zigbee...) [245, 262]</li>
+                    <li>Cloud backend & API security testing [245, 263]</li>
+                    <li>Mobile App Security Testing [245, 264]</li>
+                    <li>SAST, DAST, Fuzzing, Penetration Testing (e.g., according to OWASP FSTM) [238, 241, 244, 99, 245]</li>
+                    <li>Checking specific requirements (No default passwords, updates, data protection...) [36, 38, 40, 230, 267-272]</li>`,
+                'iot-benefits-title': 'Your Benefits:',
+                'iot-benefits-desc': 'Fulfillment of CRA requirements for CE marking, adherence to ETSI/IEC standards, protection against common IoT attacks, strengthening customer trust.',
+                'consulting-service-title': '(Optional) Compliance Consulting & Documentation Support',
+                'consulting-service-desc': 'We support you not only with testing but also with understanding relevant standards and regulations, conducting TARA workshops, and creating necessary conformity documents, including the Software Bill of Materials (SBOM) [114-130, 153].',
+                'approach-heading': 'Our Approach / Methodology',
+                'approach-intro': 'We follow a structured and holistic approach to the cybersecurity of embedded systems.',
+                'approach-list': `<li><strong>Lifecycle Integration:</strong> Security from the start ("Security by Design") [5, 173].</li>
+                    <li><strong>Risk-Based Approach:</strong> Sound Threat Analysis and Risk Assessment (TARA) as a basis [13, 78-81, 174].</li>
+                    <li><strong>Comprehensive Test Arsenal:</strong> Combination of different techniques (SAST, DAST, Fuzzing, Pen-Testing, etc.) for maximum coverage [75-110].</li>
+                     <li><strong>Ecosystem Focus:</strong> Consideration of the entire system including hardware, firmware, communication, and backend [227].</li>
+                    <li><strong>Focus on Standards & Regulations:</strong> In-depth knowledge of ISO 21434, IEC 62443, ETSI EN 303 645, R155, CRA, MDR/IVDR [11, 147-169].</li>`,
+                'icon-sast': 'Static Analysis',
+                'icon-dast': 'Dynamic Analysis',
+                'icon-fuzzing': 'Fuzz Testing',
+                'icon-pentest': 'Penetration Testing',
+                'about-heading': 'About Us / Expertise',
+                'about-desc1': 'We are a team of experienced cybersecurity experts specializing in the challenges of embedded systems, ECUs, and the Internet of Things.',
+                 'about-list': `<li>In-depth knowledge of relevant standards and legal requirements.</li>
+                    <li>Use of state-of-the-art testing methods and tools.</li>
+                    <li>Practice-oriented approach with a focus on actionable results.</li>
+                    <li>Support in achieving compliance and secure market access.</li>`,
+                'contact-heading': 'Contact',
+                'contact-intro': 'Are you ready to take the security of your ECU or IoT products to the next level and meet compliance requirements?',
+                'contact-prompt': 'Contact us for a non-binding discussion about your specific requirements.',
+                'contact-details': `Email: <a href="mailto:info@kayten.de">info@kayten.de</a> <br> Phone DE: +49 7031 496 89 89 [28]<br> Phone TR: +90 352 224 11 21 [26]<br> `,
+                'cta-button': 'Request Quote',
+                'footer-copy': '&copy; 2025 Kayten GmbH / Kayten Teknoloji Ltd. Şti. All rights reserved.'
+            },
+            // Turkish Translations
+            tr: {
+                'page-title': 'Kayten | ECU & IoT Siber Güvenlik Testleri',
+                //'main-headline': 'ECU & IoT Siber Güvenlik Testleri', // Logo
+                //'sub-headline': 'Bağlantılı Dünyada Güvenlik ve Uyumluluk Ortağınız',
+                'nav-home': 'Anasayfa',
+                'nav-services': 'Hizmetler',
+                'nav-approach': 'Yaklaşımımız',
+                'nav-about': 'Hakkımızda',
+                'nav-contact': 'İletişim',
+                'welcome-heading': 'Hoş Geldiniz',
+                'problem-headline': 'Sorun: Bağlantılı Sistemlerde Artan Riskler',
+                'problem-desc': 'Araçlardaki ECU\'ların ve milyarlarca IoT cihazının artan bağlanabilirliği, büyük saldırı yüzeyleri oluşturmaktadır [2]. Güvenlik açıkları veri kaybına, finansal hasara, uyumluluk ihlallerine (ör. UNECE R155, AB CRA\'ya karşı) ve hatta fiziksel risklere yol açabilir [3, 219]. Gömülü sistemlerin sınırlı kaynaklar ve uzun yaşam döngüleri gibi özel zorlukları olduğundan, geleneksel BT güvenliği genellikle yetersiz kalmaktadır [4].',
+                'icon-data-loss': 'Veri Kaybı',
+                'icon-physical-risk': 'Fiziksel Riskler',
+                'icon-compliance-violation': 'Uyumluluk İhlalleri',
+                'solution-headline': 'Çözümümüz: Güvenliğiniz İçin Özel Testler',
+                'solution-desc': 'ECU\'lar ve IoT cihazları için özel siber güvenlik test hizmetleri sunuyoruz. Yaklaşımımız ISO/SAE 21434, IEC 62443 ve ETSI EN 303 645 gibi yerleşik standartlara dayanmakta ve UNECE R155 ve AB Siber Dayanıklılık Yasası (CRA) gibi yasal gereklilikleri karşılamanıza yardımcı olmaktadır [11, 147, 162].',
+                'icon-robustness': 'Sağlamlık',
+                'icon-compliance': 'Uyumluluk',
+                'icon-market-access': 'Pazar Erişimi',
+                'services-heading': 'Hizmetlerimiz',
+                'ecu-service-title': 'ECU Siber Güvenlik Testleri (ISO/SAE 21434 & UNECE R155 Odaklı)',
+                'ecu-service-desc': 'Otomotiv endüstrisindeki OEM\'ler ve tedarikçiler için özel olarak [17]. ISO/SAE 21434\'ün karmaşık gereksinimlerinin üstesinden gelmenize ve UNECE R155\'e göre tip onayı almanıza yardımcı oluyoruz [12, 163].',
+                'ecu-approach-tests-title': 'Yaklaşımımız ve Uygulanan Testler:',
+                 'ecu-approach-tests-list': `<li>V-modeli ve ISO 21434'e göre süreç odaklılık</li>
+                    <li>Tehdit Analizi ve Risk Değerlendirmesi (TARA) [13, 78]</li>
+                    <li>MISRA/AUTOSAR dahil Statik Kod Analizi (SAST) [18, 83]</li>
+                    <li>Dinamik Uygulama Güvenlik Testi (DAST) [19]</li>
+                    <li>Arayüzlerin Fuzz Testi [19]</li>
+                    <li>Sızma Testleri [19]</li>
+                    <li>Arayüz ve kaynak testleri [18]</li>`,
+                'ecu-benefits-title': 'Faydalarınız:',
+                'ecu-benefits-desc': 'Durum tespiti kanıtı, tip onayı için R155 gerekliliklerinin yerine getirilmesi, güvenlik risklerinin azaltılması.',
+                'iot-service-title': 'IoT Siber Güvenlik Testleri (ETSI EN 303 645, IEC 62443 & CRA Odaklı)',
+                'iot-service-desc': 'İster tüketici IoT\'si ister endüstriyel kontrol sistemleri (IACS) olsun – tüm ekosisteminizi test ediyoruz: cihaz (firmware, donanım), iletişim protokolleri (BLE, Zigbee, WLAN vb.), bulut arka ucu ve mobil uygulamalar [227]. ETSI EN 303 645 temel çizgisine [35] ve AB Siber Dayanıklılık Yasası\'nın (CRA) [149] gerekliliklerine uygunluğu kontrol ediyoruz. Endüstriyel sistemler için IEC 62443\'ü [21] esas alıyoruz.',
+                'iot-approach-tests-title': 'Yaklaşımımız ve Uygulanan Testler:',
+                'iot-approach-tests-list': `<li>Ekosistem testleri (cihaz, iletişim, bulut, uygulama) [227]</li>
+                    <li>Firmware çıkarma ve analizi (ör. Binwalk, Ghidra) [229, 244, 231]</li>
+                    <li>Donanım arayüz testleri (JTAG, UART) [244, 261]</li>
+                    <li>İletişim protokolü analizi (WLAN, BLE, Zigbee...) [245, 262]</li>
+                    <li>Bulut arka uç ve API güvenlik testleri [245, 263]</li>
+                    <li>Mobil Uygulama Güvenlik Testi [245, 264]</li>
+                    <li>SAST, DAST, Fuzzing, Sızma Testleri (ör. OWASP FSTM'ye göre) [238, 241, 244, 99, 245]</li>
+                    <li>Özel gereksinimlerin kontrolü (Varsayılan şifre yok, güncellemeler, veri koruma...) [36, 38, 40, 230, 267-272]</li>`,
+                'iot-benefits-title': 'Faydalarınız:',
+                'iot-benefits-desc': 'CE işareti için CRA gerekliliklerinin yerine getirilmesi, ETSI/IEC standartlarına uyum, yaygın IoT saldırılarına karşı koruma, müşteri güveninin güçlendirilmesi.',
+                'consulting-service-title': '(Opsiyonel) Uyumluluk Danışmanlığı ve Dokümantasyon Desteği',
+                'consulting-service-desc': 'Sizi sadece testlerle değil, aynı zamanda ilgili standartları ve yönetmelikleri anlama, TARA çalıştayları düzenleme ve Yazılım Malzeme Listesi (SBOM) dahil olmak üzere gerekli uygunluk belgelerini oluşturma konusunda da destekliyoruz [114-130, 153].',
+                'approach-heading': 'Yaklaşımımız / Metodolojimiz',
+                 'approach-intro': 'Gömülü sistemlerin siber güvenliği için yapılandırılmış ve bütünsel bir yaklaşım izliyoruz.',
+                 'approach-list': `<li><strong>Yaşam Döngüsü Entegrasyonu:</strong> Başlangıçtan itibaren güvenlik ("Security by Design") [5, 173].</li>
+                    <li><strong>Risk Odaklı Yaklaşım:</strong> Temel olarak sağlam Tehdit Analizi ve Risk Değerlendirmesi (TARA) [13, 78-81, 174].</li>
+                    <li><strong>Kapsamlı Test Cephaneliği:</strong> Maksimum kapsama için farklı tekniklerin (SAST, DAST, Fuzzing, Sızma Testi vb.) kombinasyonu [75-110].</li>
+                     <li><strong>Ekosistem Odaklılık:</strong> Donanım, firmware, iletişim ve arka uç dahil tüm sistemin dikkate alınması [227].</li>
+                    <li><strong>Standartlar ve Yönetmeliklere Odaklanma:</strong> ISO 21434, IEC 62443, ETSI EN 303 645, R155, CRA, MDR/IVDR hakkında derinlemesine bilgi [11, 147-169].</li>`,
+                 'icon-sast': 'Statik Analiz',
+                'icon-dast': 'Dinamik Analiz',
+                'icon-fuzzing': 'Fuzz Testi',
+                'icon-pentest': 'Sızma Testi',
+                'about-heading': 'Hakkımızda / Uzmanlık',
+                 'about-desc1': 'Gömülü sistemlerin, ECU\'ların ve Nesnelerin İnterneti\'nin zorlukları konusunda net bir uzmanlığa sahip deneyimli siber güvenlik uzmanlarından oluşan bir ekibiz.',
+                'about-list': `<li>İlgili standartlar ve yasal gereklilikler hakkında derinlemesine bilgi.</li>
+                    <li>En modern test yöntemlerinin ve araçlarının kullanımı.</li>
+                    <li>Uygulanabilir sonuçlara odaklanan pratik odaklı yaklaşım.</li>
+                    <li>Uyumluluk ve güvenli pazar erişimi sağlama konusunda destek.</li>`,
+                'contact-heading': 'İletişim',
+                 'contact-intro': 'ECU veya IoT ürünlerinizin güvenliğini bir sonraki seviyeye taşımaya ve uyumluluk gereksinimlerini karşılamaya hazır mısınız?',
+                'contact-prompt': 'Özel gereksinimleriniz hakkında bağlayıcı olmayan bir görüşme için bizimle iletişime geçin.',
+                'contact-details': `E-posta: <a href="mailto:info@kayten.de">info@kayten.de</a> <br> Telefon DE: +49 7031 496 89 89 [28]<br> Telefon TR: +90 352 224 11 21 [26]<br> `,
+                'cta-button': 'Teklif İste',
+                'footer-copy': '&copy; 2025 Kayten GmbH / Kayten Teknoloji Ltd. Şti. Tüm hakları saklıdır.'
+            },
+            // German translations (for resetting/default - IDs should match HTML)
+            de: {
+                'page-title': 'Kayten | Cybersecurity Testing für ECU & IoT',
+                // Keep Logo placeholder
+                // Keep tagline placeholder
+                'nav-home': 'Start',
+                'nav-services': 'Dienstleistungen',
+                'nav-approach': 'Unser Ansatz',
+                'nav-about': 'Über Uns',
+                'nav-contact': 'Kontakt',
+                'welcome-heading': 'Willkommen',
+                'problem-headline': 'Das Problem: Wachsende Risiken in vernetzten Systemen',
+                'problem-desc': 'Die zunehmende Vernetzung von ECUs in Fahrzeugen und Milliarden von IoT-Geräten schafft enorme Angriffsflächen [2]. Sicherheitslücken können zu Datenverlust, finanziellen Schäden, Compliance-Verstößen (z.B. gegen UNECE R155, EU CRA) und sogar physischen Risiken führen [3, 219]. Herkömmliche IT-Sicherheit reicht oft nicht aus, da eingebettete Systeme spezielle Herausforderungen wie begrenzte Ressourcen und lange Lebenszyklen aufweisen [4].',
+                'icon-data-loss': 'Datenverlust',
+                'icon-physical-risk': 'Physische Risiken',
+                'icon-compliance-violation': 'Compliance-Verstöße',
+                'solution-headline': 'Unsere Lösung: Spezialisierte Tests für Ihre Sicherheit',
+                'solution-desc': 'Wir bieten spezialisierte Cybersicherheitstest-Dienstleistungen für ECUs und IoT-Geräte an. Unser Ansatz basiert auf etablierten Normen wie ISO/SAE 21434, IEC 62443 und ETSI EN 303 645 und hilft Ihnen, regulatorische Anforderungen wie UNECE R155 und den EU Cyber Resilience Act (CRA) zu erfüllen [11, 147, 162].',
+                'icon-robustness': 'Robustheit',
+                'icon-compliance': 'Compliance',
+                'icon-market-access': 'Marktzugang',
+                'services-heading': 'Unsere Dienstleistungen',
+                'ecu-service-title': 'ECU Cybersecurity Testing (ISO/SAE 21434 & UNECE R155 Fokus)',
+                'ecu-service-desc': 'Speziell für OEMs und Zulieferer der Automobilindustrie [17]. Wir helfen Ihnen, die komplexen Anforderungen der ISO/SAE 21434 zu meistern und die Typgenehmigung gemäß UNECE R155 zu erlangen [12, 163].',
+                'ecu-approach-tests-title': 'Unser Ansatz & durchgeführte Tests:',
+                 'ecu-approach-tests-list': `<li>Prozessorientierung gemäß V-Modell & ISO 21434</li>
+                    <li>Bedrohungsanalyse und Risikobewertung (TARA) [13, 78]</li>
+                    <li>Statische Code-Analyse (SAST) inkl. MISRA/AUTOSAR [18, 83]</li>
+                    <li>Dynamische Anwendungs-Sicherheitsprüfung (DAST) [19]</li>
+                    <li>Fuzz-Testing von Schnittstellen [19]</li>
+                    <li>Penetrationstests [19]</li>
+                    <li>Schnittstellen- und Ressourcentests [18]</li>`,
+                'ecu-benefits-title': 'Ihr Nutzen:',
+                'ecu-benefits-desc': 'Nachweis der Sorgfaltspflicht, Erfüllung der R155-Anforderungen für die Typgenehmigung, Reduzierung von Sicherheitsrisiken.',
+                 'iot-service-title': 'IoT Cybersecurity Testing (ETSI EN 303 645, IEC 62443 & CRA Fokus)',
+                'iot-service-desc': 'Ob Consumer IoT oder industrielle Steuerungen (IACS) – wir testen Ihr gesamtes Ökosystem: Gerät (Firmware, Hardware), Kommunikationsprotokolle (BLE, Zigbee, WLAN etc.), Cloud-Backend und mobile Apps [227]. Wir prüfen Konformität mit der ETSI EN 303 645 Baseline [35] und den Anforderungen des EU Cyber Resilience Act (CRA) [149]. Für industrielle Systeme orientieren wir uns an IEC 62443 [21].',
+                'iot-approach-tests-title': 'Unser Ansatz & durchgeführte Tests:',
+                'iot-approach-tests-list': `<li>Ökosystem-Tests (Gerät, Kommunikation, Cloud, App) [227]</li>
+                    <li>Firmware-Extraktion und -Analyse (z.B. Binwalk, Ghidra) [229, 244, 231]</li>
+                    <li>Hardware-Schnittstellen-Tests (JTAG, UART) [244, 261]</li>
+                    <li>Kommunikationsprotokoll-Analyse (WLAN, BLE, Zigbee...) [245, 262]</li>
+                    <li>Cloud-Backend & API-Sicherheitstests [245, 263]</li>
+                    <li>Mobile App Security Testing [245, 264]</li>
+                    <li>SAST, DAST, Fuzzing, Penetrationstests (z.B. nach OWASP FSTM) [238, 241, 244, 99, 245]</li>
+                    <li>Prüfung spezifischer Anforderungen (Keine Standardpasswörter, Updates, Datenschutz...) [36, 38, 40, 230, 267-272]</li>`,
+                'iot-benefits-title': 'Ihr Nutzen:',
+                'iot-benefits-desc': 'Erfüllung der CRA-Anforderungen für die CE-Kennzeichnung, Einhaltung von ETSI/IEC-Standards, Schutz vor gängigen IoT-Angriffen, Stärkung des Kundenvertrauens.',
+                'consulting-service-title': '(Optional) Compliance Beratung & Dokumentations-Support',
+                'consulting-service-desc': 'Wir unterstützen Sie nicht nur beim Testen, sondern auch beim Verständnis der relevanten Normen und Vorschriften, bei der Durchführung von TARA-Workshops und bei der Erstellung notwendiger Konformitätsdokumente, einschließlich der Software Bill of Materials (SBOM) [114-130, 153].',
+                'approach-heading': 'Unser Ansatz / Methodik',
+                 'approach-intro': 'Wir verfolgen einen strukturierten und ganzheitlichen Ansatz für die Cybersicherheit eingebetteter Systeme.',
+                 'approach-list': `<li><strong>Lebenszyklus-Integration:</strong> Sicherheit von Anfang an ("Security by Design") [5, 173].</li>
+                    <li><strong>Risikobasierter Ansatz:</strong> Fundierte Bedrohungsanalyse und Risikobewertung (TARA) als Basis [13, 78-81, 174].</li>
+                    <li><strong>Umfassendes Testarsenal:</strong> Kombination verschiedener Techniken (SAST, DAST, Fuzzing, Pen-Testing, etc.) für maximale Abdeckung [75-110].</li>
+                     <li><strong>Ökosystem-Fokus:</strong> Betrachtung des gesamten Systems inkl. Hardware, Firmware, Kommunikation und Backend [227].</li>
+                    <li><strong>Fokus auf Standards & Regularien:</strong> Tiefgehendes Wissen über ISO 21434, IEC 62443, ETSI EN 303 645, R155, CRA, MDR/IVDR [11, 147-169].</li>`,
+                 'icon-sast': 'Statische Analyse',
+                'icon-dast': 'Dynamische Analyse',
+                'icon-fuzzing': 'Fuzz Testing',
+                'icon-pentest': 'Penetration Testing',
+                'about-heading': 'Über Uns / Expertise',
+                 'about-desc1': 'Wir sind ein Team von erfahrenen Cybersicherheits-Experten mit einer klaren Spezialisierung auf die Herausforderungen von eingebetteten Systemen, ECUs und dem Internet der Dinge.',
+                'about-list': `<li>Tiefgreifende Kenntnisse relevanter Normen und gesetzlicher Vorgaben.</li>
+                    <li>Einsatz modernster Testmethoden und Werkzeuge.</li>
+                    <li>Praxisorientierter Ansatz mit Fokus auf umsetzbare Ergebnisse.</li>
+                    <li>Unterstützung bei der Erreichung von Compliance und sicherem Marktzugang.</li>`,
+                'contact-heading': 'Kontakt',
+                 'contact-intro': 'Sind Sie bereit, die Sicherheit Ihrer ECU- oder IoT-Produkte auf das nächste Level zu heben und Compliance-Anforderungen zu erfüllen?',
+                'contact-prompt': 'Kontaktieren Sie uns für ein unverbindliches Gespräch über Ihre spezifischen Anforderungen.',
+                 'contact-details': `E-Mail: <a href="mailto:info@kayten.de">info@kayten.de</a> <br> Telefon DE: +49 7031 496 89 89 [28]<br> Telefon TR: +90 352 224 11 21 [26]<br> `,
+                'cta-button': 'Angebot anfordern',
+                'footer-copy': '&copy; 2025 Kayten GmbH / Kayten Teknoloji Ltd. Şti. Alle Rechte vorbehalten.'
+             }
+        };
+
+        function changeLanguage(lang) {
+            // Set html lang attribute
+            document.documentElement.lang = lang;
+
+            // Iterate through all translation keys
+            const languagePack = translations[lang] || translations.de; // Fallback to German if lang not found
+
+            for (const key in languagePack) {
+                const element = document.getElementById(key);
+                if (element) {
+                    // Use innerHTML for elements that might contain links or lists
+                    if (key === 'contact-details' || key.endsWith('-list')) {
+                         element.innerHTML = languagePack[key];
+                    } else if(element.tagName === 'A' && element.classList.contains('cta-button')) {
+                         // Handle button text
+                          element.innerText = languagePack[key];
+                    }
+                     else {
+                        element.innerText = languagePack[key];
+                    }
+                }
+                // No warning if element not found, as some keys might be language-specific placeholders not in default lang
+            }
+             // Update page title separately
+             const titleElement = document.getElementById('page-title');
+             if(titleElement) {
+                document.title = languagePack['page-title'] || translations.de['page-title'];
+             }
+        }
+
+        // Initialize Mermaid
+        mermaid.initialize({ startOnLoad: true });
+
+        // Optional: Set initial language based on browser preference or saved setting
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     const userLang = navigator.language.split('-')[0]; // 'en', 'de', 'tr', etc.
+        //     if (translations[userLang]) {
+        //         changeLanguage(userLang);
+        //     } else {
+        //          changeLanguage('de'); // Default to German
+        //     }
+        // });
+
+        // Default to German on initial load (can be overridden by browser pref check above)
+         document.addEventListener('DOMContentLoaded', () => {
+            changeLanguage('de');
+         });
+
+
+    </script>
+
+</body>
+</html>
